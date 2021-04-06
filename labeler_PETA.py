@@ -3,27 +3,11 @@
 from layout import *
 import os.path
 import logging
-import PIL
-from PIL import Image, ImageTk
-import io
 
-
-def get_img_data(f, maxsize=[128, 256], first=False):
-    """Generate image data using PIL
-    """
-    img = Image.open(f)
-    img = img.resize(maxsize,PIL.Image.ANTIALIAS)
-    
-    # img.thumbnail(maxsize)
-    if first:                     # tkinter is inactive the first time
-        bio = io.BytesIO()
-        img.save(bio, format="PNG")
-        del img
-        return bio.getvalue()
-    return ImageTk.PhotoImage(img)
+from utils import *
 
 # Level of warnings
-logging.basicConfig(format='[%(levelname)s]: %(message)s', level=logging.NOTSET)
+logging.basicConfig(format='[%(levelname)s]: %(message)s', level=logging.INFO)
 
 # Dictionary of labels
 labels = {}
@@ -64,10 +48,11 @@ while True:
         filename = os.path.join(
                 values["-FOLDER-"], fnames[idx]
             )
+
+        #attributes={fileName:[] for fileName in fnames}
+
         logging.info('Filename at START: {}'.format(filename))
         update_img(filename, window)
-        #window["-TOUT-"].update(filename)
-        #window["-IMAGE-"].update(data=get_img_data(filename))
 
     elif event == 'Next':
         try:
@@ -76,9 +61,14 @@ while True:
                 values["-FOLDER-"], fnames[idx]
             )
             logging.info('Filename after NEXT: {}'.format(filename))
+            logging.info('Values of values_array: {}'.format(values))
+            logging.info("Type of values is: {}".format(type(values)))
+            attributes=pre_process_dict(values)
+            logging.info("Attributes after process: {}".format(attributes))
+            logging.info("Values after process: {}".format(values))
             update_img(filename, window)
         except:
-                pass
+            pass
     elif event == 'Back':
         try:
             if idx !=0:
