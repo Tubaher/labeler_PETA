@@ -55,20 +55,23 @@ while True:
         update_img(filename, window)
 
     elif event == 'Next':
-        try:
-            idx += 1
-            filename = os.path.join(
-                values["-FOLDER-"], fnames[idx]
-            )
-            logging.info('Filename after NEXT: {}'.format(filename))
-            logging.info('Values of values_array: {}'.format(values))
-            logging.info("Type of values is: {}".format(type(values)))
-            attributes=pre_process_dict(values)
-            logging.info("Attributes after process: {}".format(attributes))
-            logging.info("Values after process: {}".format(values))
-            update_img(filename, window)
-        except:
-            pass
+        # try:
+            
+        logging.info('Filename after NEXT: {}'.format(filename))
+        logging.info('Values of values_array: {}'.format(values))
+        logging.info("Type of values is: {}".format(type(values)))
+        attributes=pre_process_dict(values, fnames[idx])
+        logging.info("Attributes after process: {}".format(attributes))
+        append_row(attributes, idx)
+        #logging.info("Dataframe: {}".format(df))
+        print(df_attributes)
+        idx += 1
+        filename = os.path.join(
+            values["-FOLDER-"], fnames[idx]
+        )
+        update_img(filename, window)
+        # except:
+            # pass
     elif event == 'Back':
         try:
             if idx !=0:
