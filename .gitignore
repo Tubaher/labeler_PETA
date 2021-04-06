@@ -3,3 +3,4 @@ peta
 __pycache__
 /env
 annotations_test.txt
+.ipynb_checkpoints
