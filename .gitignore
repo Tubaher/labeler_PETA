@@ -1,3 +1,4 @@
 .vscode
 peta
 __pycache__
+/env

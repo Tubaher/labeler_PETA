@@ -3,6 +3,24 @@
 from layout import *
 import os.path
 import logging
+import PIL
+from PIL import Image, ImageTk
+import io
+
+
+def get_img_data(f, maxsize=[128, 256], first=False):
+    """Generate image data using PIL
+    """
+    img = Image.open(f)
+    img = img.resize(maxsize,PIL.Image.ANTIALIAS)
+    
+    # img.thumbnail(maxsize)
+    if first:                     # tkinter is inactive the first time
+        bio = io.BytesIO()
+        img.save(bio, format="PNG")
+        del img
+        return bio.getvalue()
+    return ImageTk.PhotoImage(img)
 
 # Level of warnings
 logging.basicConfig(format='[%(levelname)s]: %(message)s', level=logging.NOTSET)
@@ -22,7 +40,7 @@ def update_img(filename, window):
     output: image window updated 
     '''
     window["-TOUT-"].update(filename)
-    window["-IMAGE-"].update(filename=filename)
+    window["-IMAGE-"].update(data=get_img_data(filename))
 
 while True:
     event, values = window.read()
@@ -41,13 +59,15 @@ while True:
             f
             for f in file_list
             if os.path.isfile(os.path.join(folder, f))
-            and f.lower().endswith((".png", ".gif"))
+            and f.lower().endswith((".png", ".jpg"))
         ]
         filename = os.path.join(
                 values["-FOLDER-"], fnames[idx]
             )
         logging.info('Filename at START: {}'.format(filename))
         update_img(filename, window)
+        #window["-TOUT-"].update(filename)
+        #window["-IMAGE-"].update(data=get_img_data(filename))
 
     elif event == 'Next':
         try:
@@ -57,6 +77,17 @@ while True:
             )
             logging.info('Filename after NEXT: {}'.format(filename))
             update_img(filename, window)
+        except:
+                pass
+    elif event == 'Back':
+        try:
+            if idx !=0:
+                idx -= 1
+                filename = os.path.join(
+                    values["-FOLDER-"], fnames[idx]
+                )
+                logging.info('Filename after NEXT: {}'.format(filename))
+                update_img(filename, window)
         except:
                 pass
 
