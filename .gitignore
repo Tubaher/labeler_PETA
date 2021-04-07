@@ -4,3 +4,4 @@ __pycache__
 /env
 annotations_test.txt
 .ipynb_checkpoints
+test.csv

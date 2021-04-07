@@ -60,7 +60,7 @@ while True:
             logging.info('Filename before NEXT: {}'.format(filename))
             logging.info('Values of values_array: {}'.format(values))
             attributes=pre_process_dict(values, fnames[idx])
-            logging.info("Attributes after process: {}".format(attributes))
+            logging.info("Attributes after process in Next: {}".format(attributes))
             append_row(attributes, idx)
             logging.info("Dataframe df attributes: \n {}".format(df_attributes))
             
@@ -77,7 +77,7 @@ while True:
         logging.info('Filename before BACK: {}'.format(filename))
         logging.info('Values of values_array: {}'.format(values))
         attributes=pre_process_dict(values, fnames[idx])
-        logging.info("Attributes after process: {}".format(attributes))
+        logging.info("Attributes after process in Back: {}".format(attributes))
         append_row(attributes, idx)
         logging.info("Dataframe df attributes: \n {}".format(df_attributes))
 
@@ -87,7 +87,11 @@ while True:
         update_img(filename, window)
 
         #TODO Extract the data from the dataframe and update values_array
-                
+        row_dict = extract_row(idx)
+        for key in row_dict:
+            window[key].update(row_dict[key])
+        
+        #window["-TOUT-"].update(fileName+" className: "+ classNames[fileName])
         # except:
         #         pass
     
@@ -107,3 +111,4 @@ while True:
 
     
 window.close()
+

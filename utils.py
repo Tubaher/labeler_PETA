@@ -4,6 +4,7 @@ import io
 import pandas as pd
 from attributes import attributes_list, df_attributes
 
+
 def get_img_data(f, maxsize=[128, 256], first=False):
     """Generate image data using PIL
     """
@@ -37,4 +38,15 @@ def pre_process_dict(windows_dict, image_name):
     
 
 def append_row(attribute_dict, idx):
+    print('----------------IDX-------------:',idx)
     df_attributes.loc[idx] = attribute_dict
+    df_attributes.to_csv('test.csv')
+    df_attributes.loc[0]
+
+
+def extract_row( idx):
+    row_dict = df_attributes.to_dict('index')[idx]
+    row_dict.pop('image_name')
+    for key in row_dict:
+        row_dict[key] = True if row_dict[key]==1 else False
+    return row_dict
