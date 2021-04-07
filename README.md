@@ -7,8 +7,21 @@ Here, you can fin a simple labeler Python program with a graphic user interface.
 
 ## Important:
 We recomend to use virtual env to work with this code.
-- `virtualenv <name>` to create a virtualenv on Windows.
-- `virtualenv <name> -p python3` on Linux.
+- `virtualenv env` to create a virtualenv with name `env` on Windows.
+- `virtualenv env -p python3` to create a virtualenv with name `env` on Linux.
+
+## Structure of the folder:
+```
+📦labeler_PETA
+ ┣ 📜.gitignore
+ ┣ 📜README.md
+ ┣ 📜attributes.py
+ ┣ 📜labeler_PETA.py
+ ┣ 📜layout.py
+ ┣ 📜metrics.py
+ ┣ 📜requirements.txt
+ ┗ 📜utils.py
+```
 
 Please, install the requirements with the comand: \
 `$ pip install -r requirements.txt`
