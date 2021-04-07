@@ -40,7 +40,6 @@ def pre_process_dict(windows_dict, image_name):
 def append_row(attribute_dict, idx):
     print('----------------IDX-------------:',idx)
     df_attributes.loc[idx] = attribute_dict
-    df_attributes.to_csv('test.csv')
     df_attributes.loc[0]
 
 

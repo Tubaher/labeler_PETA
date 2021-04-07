@@ -7,7 +7,7 @@ import logging
 from utils import *
 
 # Level of warnings
-logging.basicConfig(format='[%(levelname)s]: %(message)s', level=logging.INFO)
+logging.basicConfig(format='[%(levelname)s]: %(message)s', level=logging.CRITICAL)
 
 # Dictionary of labels
 labels = {}
@@ -56,7 +56,7 @@ while True:
         update_img(filename, window)
 
     elif event == 'Next':
-        try:    
+        try:
             logging.info('Filename before NEXT: {}'.format(filename))
             logging.info('Values of values_array: {}'.format(values))
             attributes=pre_process_dict(values, fnames[idx])
@@ -65,9 +65,25 @@ while True:
             logging.info("Dataframe df attributes: \n {}".format(df_attributes))
             
             idx += 1
+
+            #prueba
+            #print('Estos son los values: {}'.format(values))
             
+            
+            #print('Estos son los values despues: {}'.format(values))
             filename = os.path.join(values["-FOLDER-"], fnames[idx])
             update_img(filename, window)
+            logging.info("Values before put them by default: {}".format(values))
+
+            try:
+                row_dict = extract_row(idx)
+                for key in row_dict:
+                    window[key].update(row_dict[key])
+            except:
+                for key in values:
+                    if key!= '-FOLDER-' and key!= 'Browse':
+                        window[key].update(False)
+            logging.info("Values after put them by befault: {}".format(values))
 
                 
         except:
@@ -91,10 +107,12 @@ while True:
         for key in row_dict:
             window[key].update(row_dict[key])
         
-        #window["-TOUT-"].update(fileName+" className: "+ classNames[fileName])
         # except:
         #         pass
-    
+    elif event =='Save':
+        attributes=pre_process_dict(values, fnames[idx])
+        append_row(attributes, idx)
+        df_attributes.to_csv('test.txt', index=False, header=False, sep=' ')
     
     try:
         logging.critical('Index value: {}'.format(idx))
@@ -103,6 +121,7 @@ while True:
         elif (idx-1) < 0:
             window['Back'].update(disabled=True)
         else:
+            window['Save'].update(disabled=False)
             window['Next'].update(disabled=False)
             window['Back'].update(disabled=False)
     except:
