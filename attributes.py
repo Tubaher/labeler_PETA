@@ -1,7 +1,8 @@
 import pandas as pd
 
 
-attributes_list =['Age16-30',
+attributes_list =[  'image_name',
+                    'Age16-30',
                     'Age31-45',
                     'Age46-60',
                     'AgeAbove61',

@@ -10,7 +10,7 @@ file_list_column = [
     [sg.Text("Choose an image from list on left:")],
     [sg.Text(size=(40, 1), key="-TOUT-")],
     [sg.Image(key="-IMAGE-")],
-    [sg.Button('Back'),
+    [sg.Button('Back',disabled=True),
     sg.Button('Next'),
     sg.Button('Save')]
 ]
@@ -48,7 +48,7 @@ attributes_column2 = [
     [sg.Checkbox('Stripes', default=False,key='Stripes')],
     [sg.Checkbox('Sunglasses', default=False,key='Sunglasses')],
     [sg.Checkbox('Trousers', default=False,key='Trousers')],
-    [sg.Checkbox('T-shirt', default=False,key='T-shirt')],
+    [sg.Checkbox('T-shirt', default=False,key='Tshirt')],
     [sg.Checkbox('Upper Other', default=False,key='UpperOther')],
     [sg.Checkbox('V-Neck', default=False,key='V-Neck')],
     [sg.Button("Save",disabled=True)],

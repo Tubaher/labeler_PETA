@@ -28,6 +28,7 @@ def update_img(filename, window):
 
 while True:
     event, values = window.read()
+    
     if event == "Exit" or event == sg.WIN_CLOSED:
         break
     # Folder name was filled in, make a list of files in the folder
@@ -55,34 +56,53 @@ while True:
         update_img(filename, window)
 
     elif event == 'Next':
-        # try:
+        try:    
+            logging.info('Filename before NEXT: {}'.format(filename))
+            logging.info('Values of values_array: {}'.format(values))
+            attributes=pre_process_dict(values, fnames[idx])
+            logging.info("Attributes after process: {}".format(attributes))
+            append_row(attributes, idx)
+            logging.info("Dataframe df attributes: \n {}".format(df_attributes))
             
-        logging.info('Filename after NEXT: {}'.format(filename))
+            idx += 1
+            
+            filename = os.path.join(values["-FOLDER-"], fnames[idx])
+            update_img(filename, window)
+
+                
+        except:
+            pass
+    elif event == 'Back':
+        # try:
+        logging.info('Filename before BACK: {}'.format(filename))
         logging.info('Values of values_array: {}'.format(values))
-        logging.info("Type of values is: {}".format(type(values)))
         attributes=pre_process_dict(values, fnames[idx])
         logging.info("Attributes after process: {}".format(attributes))
         append_row(attributes, idx)
-        #logging.info("Dataframe: {}".format(df))
-        print(df_attributes)
-        idx += 1
-        filename = os.path.join(
-            values["-FOLDER-"], fnames[idx]
-        )
+        logging.info("Dataframe df attributes: \n {}".format(df_attributes))
+
+        idx -= 1
+
+        filename = os.path.join(values["-FOLDER-"], fnames[idx])
         update_img(filename, window)
+
+        #TODO Extract the data from the dataframe and update values_array
+                
         # except:
-            # pass
-    elif event == 'Back':
-        try:
-            if idx !=0:
-                idx -= 1
-                filename = os.path.join(
-                    values["-FOLDER-"], fnames[idx]
-                )
-                logging.info('Filename after NEXT: {}'.format(filename))
-                update_img(filename, window)
-        except:
-                pass
+        #         pass
+    
+    
+    try:
+        logging.critical('Index value: {}'.format(idx))
+        if (idx+1) > (len(fnames)-1):
+            window['Next'].update(disabled=True)
+        elif (idx-1) < 0:
+            window['Back'].update(disabled=True)
+        else:
+            window['Next'].update(disabled=False)
+            window['Back'].update(disabled=False)
+    except:
+        pass
 
 
     
